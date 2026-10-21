@@ -1,0 +1,14 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+
+# Dependencies & builds (if added later)
+node_modules/
+dist/
+build/
+
+# Environment / secrets
+.env
+.env.*

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Reminders</title>
+    <link rel="stylesheet" href="reminders.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='../my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='../documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='../mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li class="active" onclick="window.location.href='reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='../emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='../ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+    <header class="topbar">
+        <div class="welcome">
+            <span class="eyebrow">VEHICLE CARE</span>
+            <h1>Reminders</h1>
+            <p>Never miss a service, renewal or important vehicle maintenance task.</p>
+        </div>
+
+        <div class="top-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input id="globalSearch" type="text" placeholder="Search">
+            </div>
+
+            <div class="notification" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span id="notificationCount">3</span>
+            </div>
+
+            <div class="profile" onclick="window.location.href='../profile-page/profile.html'">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="overview">
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-calendar-days"></i></div>
+            <div><strong id="totalCount">0</strong><span>Total Reminders</span></div>
+        </div>
+
+        <div class="overview-card urgent-card">
+            <div class="overview-icon"><i class="fas fa-circle-exclamation"></i></div>
+            <div><strong id="dueSoonCount">0</strong><span>Due Soon</span></div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-circle-check"></i></div>
+            <div><strong id="completedCount">0</strong><span>Completed</span></div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-calendar-check"></i></div>
+            <div><strong id="monthCount">0</strong><span>This Month</span></div>
+        </div>
+    </section>
+
+    <section class="page-heading">
+        <div>
+            <span class="section-label">MAINTENANCE PLANNER</span>
+            <h2>My Reminders</h2>
+        </div>
+
+        <button class="primary-btn" id="addReminderBtn">
+            <i class="fas fa-plus"></i> Add Reminder
+        </button>
+    </section>
+
+    <div class="toolbar">
+        <div class="reminder-search">
+            <i class="fas fa-search"></i>
+            <input id="reminderSearch" type="text"
+                   placeholder="Search reminder, vehicle or category...">
+        </div>
+
+        <select id="statusFilter">
+            <option value="all">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="soon">Due Soon</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+        </select>
+
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Service">Service</option>
+            <option value="Insurance">Insurance</option>
+            <option value="PUC">PUC</option>
+            <option value="RC">RC / Registration</option>
+            <option value="Tyres">Tyres</option>
+            <option value="Battery">Battery</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+
+    <section id="reminderContainer" class="reminder-grid"></section>
+
+    <section class="bottom-grid">
+
+        <div class="panel calendar-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">SCHEDULE</span>
+                    <h2>Upcoming Calendar</h2>
+                </div>
+                <i class="fas fa-calendar-days"></i>
+            </div>
+
+            <div class="calendar-header">
+                <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                <strong id="calendarTitle"></strong>
+                <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="weekdays">
+                <span>Sun</span><span>Mon</span><span>Tue</span>
+                <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+            </div>
+
+            <div id="calendarGrid" class="calendar-grid"></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">QUICK ACTIONS</span>
+                    <h2>Vehicle Care</h2>
+                </div>
+                <i class="fas fa-car-side"></i>
+            </div>
+
+            <div class="quick-action" id="serviceAction">
+                <div class="quick-icon service">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                </div>
+                <div>
+                    <strong>Schedule Service</strong>
+                    <p>Find a mechanic for your vehicle.</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+
+            <div class="quick-action" id="documentAction">
+                <div class="quick-icon document">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <div>
+                    <strong>Check Documents</strong>
+                    <p>Review insurance, RC and PUC.</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+
+            <div class="quick-action" id="vehicleAction">
+                <div class="quick-icon vehicle">
+                    <i class="fas fa-car"></i>
+                </div>
+                <div>
+                    <strong>My Vehicles</strong>
+                    <p>Manage your vehicle information.</p>
+                </div>
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- ADD / EDIT REMINDER MODAL -->
+<div class="modal" id="reminderModal">
+    <div class="modal-content">
+        <button class="close" id="closeModal">&times;</button>
+
+        <span class="section-label">VEHICLE CARE</span>
+        <h2 id="modalTitle">Add Reminder</h2>
+        <p class="modal-subtitle">
+            Create a reminder so AutoNexus can keep your vehicle maintenance organised.
+        </p>
+
+        <form id="reminderForm">
+
+            <label>Reminder Title
+                <div class="input-wrap">
+                    <i class="fas fa-bell"></i>
+                    <input id="reminderTitle" type="text"
+                           placeholder="e.g. Hyundai Creta Service" required>
+                </div>
+            </label>
+
+            <div class="form-row">
+                <label>Vehicle
+                    <select id="reminderVehicle" required></select>
+                </label>
+
+                <label>Category
+                    <select id="reminderCategory" required>
+                        <option>Service</option>
+                        <option>Insurance</option>
+                        <option>PUC</option>
+                        <option>RC</option>
+                        <option>Tyres</option>
+                        <option>Battery</option>
+                        <option>Other</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-row">
+                <label>Due Date
+                    <input id="reminderDate" type="date" required>
+                </label>
+
+                <label>Reminder Time
+                    <input id="reminderTime" type="time" value="09:00" required>
+                </label>
+            </div>
+
+            <label>Notes
+                <textarea id="reminderNotes"
+                          placeholder="Add notes about this reminder..."></textarea>
+            </label>
+
+            <label class="switch-row">
+                <span>
+                    <strong>Browser notification</strong>
+                    <small>Show a notification when this reminder is due.</small>
+                </span>
+                <input id="notificationToggle" type="checkbox" checked>
+            </label>
+
+            <button class="save-btn" type="submit">
+                <i class="fas fa-check"></i> Save Reminder
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- VIEW REMINDER MODAL -->
+<div class="modal" id="viewModal">
+    <div class="modal-content small">
+        <button class="close" id="closeView">&times;</button>
+        <span class="section-label">REMINDER DETAILS</span>
+        <div id="viewContent"></div>
+    </div>
+</div>
+    <script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+    <script src="reminders_fixed.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | AI Assistant</title>
+    <link rel="stylesheet" href="ai-assistant.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='../my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='../documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='../mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='../reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='../emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li class="active" onclick="window.location.href='ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+    <header class="topbar">
+        <div class="welcome">
+            <span class="eyebrow">AUTONEXUS INTELLIGENCE</span>
+            <h1>AI Assistant</h1>
+            <p>Your personal vehicle assistant for maintenance, troubleshooting and service planning.</p>
+        </div>
+
+        <div class="top-right">
+            <div class="notification" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span id="notificationCount">0</span>
+            </div>
+
+            <div class="profile" onclick="window.location.href='../profile-page/profile.html'">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="assistant-layout">
+
+        <!-- CHAT -->
+        <section class="chat-panel">
+
+            <div class="chat-header">
+                <div class="assistant-identity">
+                    <div class="ai-avatar">
+                        <i class="fas fa-robot"></i>
+                        <span class="online-dot"></span>
+                    </div>
+
+                    <div>
+                        <strong>AutoNexus AI</strong>
+                        <span><i class="fas fa-circle"></i> Online</span>
+                    </div>
+                </div>
+
+                <div class="chat-actions">
+                    <button id="clearChat" title="Clear chat">
+                        <i class="fas fa-trash-can"></i>
+                    </button>
+                    <button id="newChat" title="New chat">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <div class="typing" id="typing">
+                <span></span><span></span><span></span>
+                AutoNexus AI is thinking...
+            </div>
+
+            <div class="suggestions" id="suggestions">
+                <button data-prompt="When is my next vehicle service due?">
+                    <i class="fas fa-wrench"></i>
+                    Next service
+                </button>
+
+                <button data-prompt="Is my insurance about to expire?">
+                    <i class="fas fa-shield-halved"></i>
+                    Insurance status
+                </button>
+
+                <button data-prompt="What's my vehicle health score?">
+                    <i class="fas fa-heart-pulse"></i>
+                    Vehicle health
+                </button>
+
+                <button data-prompt="What should I check if my car is not starting?">
+                    <i class="fas fa-car"></i>
+                    Car won't start
+                </button>
+
+                <button data-prompt="How can I improve my car mileage?">
+                    <i class="fas fa-gas-pump"></i>
+                    Improve mileage
+                </button>
+
+                <button data-prompt="Find a mechanic for me">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                    Find mechanic
+                </button>
+            </div>
+
+            <form class="chat-input-area" id="chatForm">
+                <button type="button" class="attach-btn" id="voiceBtn"
+                        title="Voice input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+
+                <input id="chatInput"
+                       type="text"
+                       autocomplete="off"
+                       placeholder="Ask anything about your vehicle...">
+
+                <button type="submit" class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+
+            <p class="ai-disclaimer">
+                <i class="fas fa-shield-halved"></i>
+                AI suggestions are for general guidance. For serious vehicle problems,
+                consult a qualified mechanic.
+            </p>
+        </section>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="assistant-side">
+
+            <div class="side-card vehicle-card">
+                <div class="side-card-header">
+                    <div>
+                        <span class="section-label">YOUR VEHICLE</span>
+                        <h3 id="vehicleName">No Vehicle Added</h3>
+                    </div>
+                    <i class="fas fa-car"></i>
+                </div>
+
+                <select id="assistantVehicleSelect" class="vehicle-switcher" style="display:none;width:100%;margin-bottom:14px;"></select>
+
+                <div class="vehicle-status">
+                    <div class="vehicle-image">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+
+                    <div>
+                        <strong id="vehicleNumber">------</strong>
+                        <span id="vehicleMeta">Fuel: --</span>
+                    </div>
+                </div>
+
+                <div class="vehicle-health">
+                    <div>
+                        <span>Vehicle Health</span>
+                        <strong id="vehicleHealthLabel">--</strong>
+                    </div>
+
+                    <div class="health-bar">
+                        <span id="vehicleHealthBar" style="width:0%;"></span>
+                    </div>
+                </div>
+
+                <button class="side-link"
+                        onclick="window.location.href='../my-vehicle-page/my-vehicle.html'">
+                    View vehicle <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="side-card">
+                <div class="side-card-header">
+                    <div>
+                        <span class="section-label">AI TOOLS</span>
+                        <h3>Quick Tools</h3>
+                    </div>
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                </div>
+
+                <button class="tool-row" data-tool="diagnose">
+                    <span class="tool-icon diagnose">
+                        <i class="fas fa-stethoscope"></i>
+                    </span>
+                    <span>
+                        <strong>Diagnose a Problem</strong>
+                        <small>Describe symptoms</small>
+                    </span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button class="tool-row" data-tool="maintenance">
+                    <span class="tool-icon maintenance">
+                        <i class="fas fa-list-check"></i>
+                    </span>
+                    <span>
+                        <strong>Maintenance Plan</strong>
+                        <small>Build a service checklist</small>
+                    </span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button class="tool-row" data-tool="cost">
+                    <span class="tool-icon cost">
+                        <i class="fas fa-indian-rupee-sign"></i>
+                    </span>
+                    <span>
+                        <strong>Estimate Cost</strong>
+                        <small>Get a rough repair estimate</small>
+                    </span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button class="tool-row" data-tool="mileage">
+                    <span class="tool-icon mileage">
+                        <i class="fas fa-gauge-high"></i>
+                    </span>
+                    <span>
+                        <strong>Mileage Tips</strong>
+                        <small>Improve fuel efficiency</small>
+                    </span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button class="tool-row" data-tool="vehicle">
+                    <span class="tool-icon vehicle">
+                        <i class="fas fa-heart-pulse"></i>
+                    </span>
+                    <span>
+                        <strong>Check My Vehicle</strong>
+                        <small>Service, insurance &amp; health</small>
+                    </span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- <div class="side-card">
+                <div class="side-card-header">
+                    <div>
+                        <span class="section-label">TIP</span>
+                        <h3>Ask Me Anything</h3>
+                    </div>
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <p style="color:var(--muted);font-size:.78rem;line-height:1.7;">
+                    I can look at your active vehicle's own service data to answer
+                    questions like "when is my next service due?" or "is my
+                    insurance expiring soon?" — just ask in plain language.
+                </p>
+            </div> -->
+
+        </aside>
+    </section>
+
+</main>
+
+<script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+<script src="ai-assistant.js"></script>
+</body>
+</html>

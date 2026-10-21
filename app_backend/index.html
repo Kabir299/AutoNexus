@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Smart Vehicle Assistance</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="autonexus-theme.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <!-- ================= PRELOADER ================= -->
+    <div id="loader">
+        <div class="loader-circle"></div>
+        <h2>AutoNexus</h2>
+    </div>
+    <!-- ================= HEADER ================= -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-car-side"></i>
+                <span>AutoNexus</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#ai">AI Assistant</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <button class="login-btn" onclick="window.location.href='login.html'">
+    Login
+</button>
+                <button class="signup-btn" onclick="window.location.href='signup.html'">
+    Sign Up
+</button>
+            </div>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="hero-tag">
+                    Smart Vehicle Assistance Platform
+                </span>
+                <h1>
+                    Drive Smarter.<br>
+                    Get Help Faster.
+                </h1>
+                <p>
+                    AutoNexus connects you with nearby verified mechanics,
+                    stores your important vehicle documents,
+                    reminds you before expiry,
+                    and provides AI-powered vehicle diagnosis.
+                </p>
+                <div class="hero-buttons">
+                    <button class="primary-btn" onclick="window.location.href='login.html'">
+                        Book Assistance
+                    </button>
+                    <button class="secondary-btn" onclick="window.location.href='login.html'">
+                        Learn More
+                    </button>
+                </div>
+                <div class="hero-features">
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        GPS Tracking
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-robot"></i>
+                        AI Diagnosis
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-file-shield"></i>
+                        Vehicle Locker
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <img src="assets/redcharlie-vQVWIsIBafA-unsplash.jpg" alt="Car">
+            </div>
+        </div>
+    </section>
+    <!-- ================= STATS ================= -->
+    <section class="stats">
+        <div class="stat-card">
+            <h2 class="counter" data-target="50000">0</h2>
+            <p>Happy Users</p>
+        </div>
+        <div class="stat-card">
+            <h2 class="counter" data-target="1200">0</h2>
+            <p>Verified Mechanics</p>
+        </div>
+        <div class="stat-card">
+            <h2 class="counter" data-target="350">0</h2>
+            <p>Cities Covered</p>
+        </div>
+        <div class="stat-card">
+            <h2>24/7</h2>
+            <p>Emergency Support</p>
+        </div>
+    </section>
+    <!-- ================= FEATURES ================= -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <span>Why Choose Us</span>
+            <h2>Everything Your Vehicle Needs</h2>
+            <p>
+                One platform to manage documents, locate mechanics,
+                request emergency assistance, and diagnose vehicle issues.
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fa-solid fa-location-crosshairs"></i>
+                <h3>GPS Mechanic Finder</h3>
+                <p>
+                    Instantly locate nearby mechanics based on
+                    your live location.
+                </p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-robot"></i>
+                <h3>AI Vehicle Diagnosis</h3>
+                <p>
+                    Describe the problem and receive possible
+                    causes with recommended actions.
+                </p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-file-shield"></i>
+                <h3>Digital Vehicle Locker</h3>
+                <p>
+                    Securely store RC, DL, Insurance,
+                    PUC and Service History.
+                </p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-bell"></i>
+                <h3>Expiry Alerts</h3>
+                <p>
+                    Never miss renewal dates for insurance,
+                    PUC or vehicle registration.
+                </p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h3>Verified Mechanics</h3>
+                <p>
+                    Trusted and highly rated professionals
+                    near your location.
+                </p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <h3>Emergency SOS</h3>
+                <p>
+                    Request roadside assistance with
+                    one click during emergencies.
+                </p>
+            </div>
+        </div>
+    </section>
+    <!-- ===== CONTINUES IN PART 2 ===== -->
+         <!-- ================= SERVICES ================= -->
+    <section class="services" id="services">
+        <div class="section-title">
+            <span>Our Services</span>
+            <h2>Roadside & Vehicle Services</h2>
+            <p>
+                Professional automotive services available whenever and wherever you need them.
+            </p>
+        </div>
+        <div class="service-container">
+            <div class="service-card">
+                <i class="fa-solid fa-car-burst"></i>
+                <h3>Emergency Breakdown</h3>
+                <p>Quick roadside support during unexpected vehicle failures.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-oil-can"></i>
+                <h3>Oil Change</h3>
+                <p>Professional engine oil replacement at your location.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-car-battery"></i>
+                <h3>Battery Replacement</h3>
+                <p>Instant battery jump start and replacement service.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-circle-notch"></i>
+                <h3>Tyre Repair</h3>
+                <p>Puncture repair and tyre replacement anywhere.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-truck-pickup"></i>
+                <h3>Towing Service</h3>
+                <p>Safe towing to your nearest workshop.</p>
+            </div>
+            <div class="service-card">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h3>General Repair</h3>
+                <p>Certified mechanics for all repair requirements.</p>
+            </div>
+        </div>
+    </section>
+    <!-- ================= AI ASSISTANT ================= -->
+    <section class="ai-section" id="ai">
+        <div class="ai-left">
+            <img src="assets/istockphoto-1646708089-612x612.webp" alt="AI">
+        </div>
+        <div class="ai-right">
+            <span>AI Powered Assistant</span>
+            <h2>Diagnose Your Vehicle Before Calling a Mechanic</h2>
+            <p>
+                Describe your vehicle issue and our AI will identify
+                possible causes, estimate severity,
+                recommend temporary fixes,
+                and suggest whether professional assistance is required.
+            </p>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> Engine Diagnostics</li>
+                <li><i class="fas fa-check-circle"></i> Battery Analysis</li>
+                <li><i class="fas fa-check-circle"></i> Brake Problems</li>
+                <li><i class="fas fa-check-circle"></i> Fuel System Issues</li>
+                <li><i class="fas fa-check-circle"></i> Emergency Suggestions</li>
+            </ul>
+            <button class="primary-btn" onclick="window.location.href='login.html'">
+                Try AI Assistant
+            </button>
+        </div>
+    </section>
+    <!-- ================= DIGITAL LOCKER ================= -->
+    <section class="locker">
+        <div class="section-title">
+            <span>Digital Locker</span>
+            <h2>Store Important Vehicle Documents Securely</h2>
+        </div>
+        <div class="locker-grid">
+            <div class="locker-card">
+                <i class="fa-solid fa-id-card"></i>
+                <h3>Driving License</h3>
+            </div>
+            <div class="locker-card">
+                <i class="fa-solid fa-car"></i>
+                <h3>Registration Certificate</h3>
+            </div>
+            <div class="locker-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>Insurance</h3>
+            </div>
+            <div class="locker-card">
+                <i class="fa-solid fa-file-circle-check"></i>
+                <h3>PUC Certificate</h3>
+            </div>
+            <div class="locker-card">
+                <i class="fa-solid fa-folder-open"></i>
+                <h3>Service Records</h3>
+            </div>
+            <div class="locker-card">
+                <i class="fa-solid fa-file-invoice"></i>
+                <h3>Repair Bills</h3>
+            </div>
+        </div>
+    </section>
+    <!-- ================= EMERGENCY ================= -->
+    <section class="emergency">
+        <div class="emergency-content">
+            <h2>Vehicle Broke Down?</h2>
+            <p>
+                Share your live location and instantly connect
+                with the nearest verified mechanic.
+            </p>
+            <button class="sos-btn" onclick="window.location.href='login.html'">
+                <i class="fa-solid fa-location-dot"></i>
+                Request Emergency Help
+            </button>
+        </div>
+    </section>
+    <!-- ================= MECHANICS ================= -->
+    <section class="mechanics">
+        <div class="section-title">
+            <span>Nearby Mechanics</span>
+            <h2>Trusted Professionals Near You</h2>
+        </div>
+        <div class="mechanic-grid">
+            <div class="mechanic-card">
+                <img src="assets/sten-rademaker-UZUzvJEvKnI-unsplash.jpg" alt="">
+                <h3>Rahul Motors</h3>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>2.1 km Away</p>
+                <button onclick="window.location.href='login.html'">Book Now</button>
+            </div>
+            <div class="mechanic-card">
+                <img src="assets/dextar-studio-erWc6mrOq_I-unsplash.jpg" alt="">
+                <h3>SpeedFix Garage</h3>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>3.5 km Away</p>
+                <button onclick="window.location.href='login.html'">Book Now</button>
+            </div>
+            <div class="mechanic-card">
+                <img src="assets/tim-mossholder-V37iTrYZz2E-unsplash.jpg" alt="">
+                <h3>AutoCare Hub</h3>
+                <p>⭐⭐⭐⭐</p>
+                <p>4.8 km Away</p>
+                <button onclick="window.location.href='login.html'">Book Now</button>
+            </div>
+        </div>
+    </section>
+    <!-- ================= ABOUT ================= -->
+    <section class="about" id="about">
+        <div class="about-left">
+            <img src="assets/erik-mclean-T-1iyPlzw_4-unsplash.jpg" alt="">
+        </div>
+        <div class="about-right">
+            <span>About AutoNexus</span>
+            <h2>Your Smart Vehicle Companion</h2>
+            <p>
+                AutoNexus is an intelligent vehicle management platform
+                designed to simplify vehicle ownership.
+                From securely storing documents to finding nearby
+                mechanics, receiving expiry reminders,
+                and AI-powered diagnostics,
+                everything is available in one platform.
+            </p>
+            <div class="about-features">
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    Fast Assistance
+                </div>
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    AI Powered
+                </div>
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    Secure Storage
+                </div>
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    Trusted Mechanics
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ===== CONTINUES IN PART 3 ===== -->
+         <!-- ================= FAQ ================= -->
+    <section class="faq" id="faq">
+        <div class="section-title">
+            <span>Frequently Asked Questions</span>
+            <h2>Everything You Need To Know</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How does AutoNexus find nearby mechanics?</h3>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        We use your GPS location to locate verified mechanics closest to your current position.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Are my documents secure?</h3>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Yes. All uploaded documents are stored securely and only accessible by you.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Can AI solve every vehicle issue?</h3>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        AI provides guidance and troubleshooting. Serious issues will still require professional inspection.
+                    </p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Will I receive expiry reminders?</h3>
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>
+                        Yes. Insurance, RC, Driving License and PUC reminders are automatically generated.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact">
+        <div class="section-title">
+            <span>Contact Us</span>
+            <h2>Need Assistance?</h2>
+        </div>
+        <div class="contact-container">
+            <div class="contact-left">
+                <h3>Get In Touch</h3>
+                <p>
+                    Our support team is available 24/7 to help you with roadside assistance and technical support.
+                </p>
+                <div class="contact-info">
+                    <p>
+                        <i class="fas fa-phone"></i>
+                        +91 98765 43210
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope"></i>
+                        support@autonexus.com
+                    </p>
+                    <p>
+                        <i class="fas fa-location-dot"></i>
+                        Chandigarh, India
+                    </p>
+                </div>
+            </div>
+            <div class="contact-right">
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="text" placeholder="Vehicle Model">
+                    <textarea rows="6" placeholder="Describe your issue"></textarea>
+                    <button type="submit" class="primary-btn">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h2>AutoNexus</h2>
+                <p>
+                    Smart Vehicle Assistance Platform designed to make vehicle ownership safer, smarter and easier.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <a href="#">Roadside Assistance</a>
+                <a href="#">AI Diagnosis</a>
+                <a href="#">Vehicle Locker</a>
+                <a href="#">Mechanic Booking</a>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-instagram"></i>
+                    <i class="fab fa-linkedin-in"></i>
+                    <i class="fab fa-x-twitter"></i>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2026 AutoNexus. All Rights Reserved.
+        </div>
+    </footer>
+    <!-- Scroll To Top -->
+    <button id="topBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <script src="script.js"></script>
+</body>
+</html>

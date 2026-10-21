@@ -1,0 +1,509 @@
+/* ===========================
+   GOOGLE FONT
+=========================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+/* ===========================
+   RESET
+=========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url("assets/login-bg.jpg");
+    background-size:cover;
+    background-position:center;
+    overflow:hidden;
+}
+
+/* Signup: the full form must remain reachable on every viewport. */
+body.signup-page{
+    min-height:100dvh;
+    height:auto;
+    align-items:flex-start;
+    overflow-x:hidden;
+    overflow-y:auto;
+    padding:24px;
+}
+body.signup-page .container{
+    height:auto;
+    min-height:650px;
+    max-height:none;
+    overflow:hidden;
+}
+body.signup-page .right-panel{
+    min-height:650px;
+    height:auto;
+    overflow:visible;
+    align-items:flex-start;
+    padding:44px 0;
+}
+body.signup-page .right-panel form{
+    padding:0;
+    margin:auto;
+}
+body.signup-page ::-webkit-scrollbar{width:0;height:0}
+body.signup-page{scrollbar-width:none}
+/* ===========================
+   MAIN CONTAINER
+=========================== */
+.container{
+    width:1100px;
+    height:650px;
+    display:grid;
+    grid-template-columns:45% 55%;
+    background:rgba(12,18,30,.55);border:1px solid rgba(200,169,106,.15);
+    backdrop-filter:blur(18px);
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+}
+/* ===========================
+   LEFT PANEL
+=========================== */
+.left-panel{
+    background:
+    linear-gradient(rgba(200,169,106,.78),
+    rgba(15,23,42,.92)),
+    url("assets/car.jpg");
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:50px;
+}
+.overlay{
+    color:white;
+}
+.overlay h1{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+.overlay p{
+    font-size:1.05rem;
+    line-height:1.8;
+}
+/* ===========================
+   RIGHT PANEL
+=========================== */
+.right-panel{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#111;
+}
+form{
+    width:80%;
+}
+form h2{
+    color:white;
+    font-size:2.4rem;
+    margin-bottom:35px;
+}
+/* ===========================
+   INPUT BOX
+=========================== */
+.input-box{
+    position:relative;
+    margin-bottom:22px;
+}
+.input-box input{
+    width:100%;
+    padding:16px 50px;
+    background:#1c1c1c;
+    border:1px solid #333;
+    border-radius:12px;
+    color:white;
+    font-size:1rem;
+    outline:none;
+    transition:.3s;
+}
+.input-box input:focus{
+    border-color:#C8A96A;
+}
+.input-box i:first-child{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#888;
+}
+/* ===========================
+   PASSWORD ICON
+=========================== */
+.password-box{
+    position:relative;
+}
+.togglePassword{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#999;
+    transition:.3s;
+}
+.togglePassword:hover{
+    color:#C8A96A;
+}
+/* ===========================
+   PASSWORD RULES
+=========================== */
+.rules{
+    color:#bbb;
+    margin-bottom:25px;
+    font-size:.9rem;
+}
+.rules ul{
+    margin-top:10px;
+    padding-left:18px;
+}
+.rules li{
+    margin-bottom:6px;
+}
+/* ===========================
+   LOGIN OPTIONS
+=========================== */
+.login-options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    color:white;
+}
+.login-options a{
+    color:#C8A96A;
+    text-decoration:none;
+}
+.login-options label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+/* ===========================
+   BUTTON
+=========================== */
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#C8A96A;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:600;
+}
+button:hover{
+    background:#ff4b5c;
+    transform:translateY(-3px);
+}
+/* ===========================
+   LINKS
+=========================== */
+form p{
+    margin-top:25px;
+    color:#bbb;
+    text-align:center;
+}
+form p a{
+    color:#C8A96A;
+    text-decoration:none;
+    font-weight:600;
+}
+form p a:hover{
+    text-decoration:underline;
+}
+/*=========================================
+        FLOATING ANIMATION
+=========================================*/
+.container{
+    animation:fadeIn .8s ease;
+}
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+.left-panel{
+    animation:slideLeft 1s ease;
+}
+@keyframes slideLeft{
+    from{
+        transform:translateX(-80px);
+        opacity:0;
+    }
+    to{
+        transform:translateX(0);
+        opacity:1;
+    }
+}
+.right-panel{
+    animation:slideRight 1s ease;
+}
+@keyframes slideRight{
+    from{
+        transform:translateX(80px);
+        opacity:0;
+    }
+    to{
+        transform:translateX(0);
+        opacity:1;
+    }
+}
+/*=========================================
+        INPUT HOVER EFFECT
+=========================================*/
+.input-box input:hover{
+    border-color:#C8A96A;
+}
+.input-box input::placeholder{
+    color:#888;
+}
+.input-box input:focus{
+    box-shadow:0 0 20px rgba(230,57,70,.25);
+}
+/*=========================================
+        BUTTON EFFECT
+=========================================*/
+button{
+    position:relative;
+    overflow:hidden;
+}
+button::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:120%;
+    height:100%;
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.25),
+        transparent
+    );
+    transition:.6s;
+}
+button:hover::before{
+    left:120%;
+}
+/*=========================================
+        ERROR MESSAGE
+=========================================*/
+.error{
+    color:#ff4d4d;
+    font-size:.85rem;
+    margin-top:-10px;
+    margin-bottom:15px;
+    display:none;
+}
+.success{
+    color:#42ff7b;
+    font-size:.9rem;
+    margin-top:10px;
+    margin-bottom:15px;
+    display:none;
+}
+/*=========================================
+        PASSWORD STRENGTH
+=========================================*/
+.strength{
+    width:100%;
+    height:6px;
+    border-radius:20px;
+    background:#2c2c2c;
+    margin-top:8px;
+    overflow:hidden;
+}
+.strength span{
+    display:block;
+    height:100%;
+    width:0;
+    border-radius:20px;
+    transition:.4s;
+}
+.weak{
+    width:33% !important;
+    background:#ff3b3b;
+}
+.medium{
+    width:66% !important;
+    background:#ffc107;
+}
+.strong{
+    width:100% !important;
+    background:#28d17c;
+}
+/*=========================================
+        CHECKBOX
+=========================================*/
+input[type="checkbox"]{
+    accent-color:#C8A96A;
+    cursor:pointer;
+}
+/*=========================================
+        LINK EFFECTS
+=========================================*/
+a{
+    transition:.3s;
+}
+a:hover{
+    color:#ff4d5c;
+}
+/*=========================================
+        SCROLLBAR
+=========================================*/
+::-webkit-scrollbar{
+    width:10px;
+}
+::-webkit-scrollbar-track{
+    background:#111;
+}
+::-webkit-scrollbar-thumb{
+    background:#C8A96A;
+    border-radius:20px;
+}
+/*=========================================
+        RESPONSIVE
+=========================================*/
+@media(max-width:992px){
+.container{
+    width:90%;
+    grid-template-columns:1fr;
+    height:auto;
+}
+body.signup-page .container{max-height:none}
+body.signup-page .right-panel{min-height:auto;overflow:visible}
+.left-panel{
+    min-height:250px;
+}
+.right-panel{
+    padding:40px 0;
+}
+form{
+    width:85%;
+}
+}
+@media(max-width:768px){
+body{
+    padding:20px;
+}
+body.signup-page{
+    padding:12px;
+}
+.container{
+    border-radius:15px;
+}
+.overlay h1{
+    font-size:2.2rem;
+}
+.overlay p{
+    font-size:.95rem;
+}
+form h2{
+    font-size:2rem;
+}
+.input-box input{
+    padding:14px 45px;
+}
+button{
+    padding:14px;
+}
+.login-options{
+    flex-direction:column;
+    gap:15px;
+    align-items:flex-start;
+}
+}
+@media(max-width:500px){
+.container{
+    width:100%;
+}
+.left-panel{
+    padding:30px;
+}
+.overlay h1{
+    font-size:1.8rem;
+}
+.overlay p{
+    font-size:.9rem;
+}
+form{
+    width:90%;
+}
+form h2{
+    text-align:center;
+}
+.rules{
+    font-size:.8rem;
+}
+}
+/*=========================================
+        SHAKE ANIMATION
+=========================================*/
+.shake{
+    animation:shake .35s;
+}
+@keyframes shake{
+0%{transform:translateX(0);}
+25%{transform:translateX(-8px);}
+50%{transform:translateX(8px);}
+75%{transform:translateX(-8px);}
+100%{transform:translateX(0);}
+}
+/*=========================================
+        SUCCESS POPUP
+=========================================*/
+.popup{
+    position:fixed;
+    top:25px;
+    right:25px;
+    background:#1d1d1d;
+    color:white;
+    padding:18px 30px;
+    border-left:5px solid #28d17c;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    opacity:0;
+    pointer-events:none;
+    transition:.4s;
+    z-index:1000;
+}
+.popup.show{
+    opacity:1;
+    pointer-events:auto;
+}
+/* Final signup overflow guard: never clip the form. */
+body.signup-page .container,
+body.signup-page .right-panel,
+body.signup-page #signupForm{
+    max-height:none !important;
+}
+body.signup-page .container{
+    overflow:visible !important;
+}
+body.signup-page .right-panel{
+    overflow:visible !important;
+}
+@media (max-width:992px){
+    body.signup-page .container{display:block;}
+    body.signup-page .right-panel{padding:36px 0 48px;}
+}

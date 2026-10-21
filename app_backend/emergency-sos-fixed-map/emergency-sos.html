@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Emergency SOS</title>
+    <link rel="stylesheet" href="emergency-sos.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          crossorigin="">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='../my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='../documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='../mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='../reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li class="active" onclick="window.location.href='emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='../ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+    <header class="topbar">
+        <div class="welcome">
+            <span class="eyebrow">EMERGENCY ASSISTANCE</span>
+            <h1>Emergency SOS</h1>
+            <p>Get roadside assistance quickly and share your location with people you trust.</p>
+        </div>
+
+        <div class="top-right">
+            <div class="notification" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span id="notificationCount">0</span>
+            </div>
+            <div class="profile" onclick="window.location.href='../profile-page/profile.html'">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="emergency-hero">
+        <div class="hero-content">
+            <div class="warning-icon">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+
+            <div>
+                <span class="section-label">QUICK RESPONSE</span>
+                <h2>Need help on the road?</h2>
+                <p>
+                    Request roadside assistance, share your current location,
+                    or contact one of your emergency contacts.
+                </p>
+            </div>
+        </div>
+
+        <button class="main-sos" id="mainSosBtn">
+            <span class="sos-ring"><i class="fas fa-location-crosshairs"></i></span>
+            <span>
+                <strong>REQUEST SOS</strong>
+                <small>Start roadside assistance</small>
+            </span>
+        </button>
+    </section>
+
+    <section class="status-grid">
+
+        <div class="status-card">
+            <div class="status-icon location">
+                <i class="fas fa-location-dot"></i>
+            </div>
+            <div>
+                <span>YOUR LOCATION</span>
+                <strong id="locationStatus">Not shared</strong>
+                <p id="coordinates">Tap the button below to detect location.</p>
+            </div>
+            <button class="small-action" id="locationBtn">
+                <i class="fas fa-crosshairs"></i>
+            </button>
+        </div>
+
+        <div class="status-card">
+            <div class="status-icon vehicle">
+                <i class="fas fa-car"></i>
+            </div>
+            <div>
+                <span>SELECTED VEHICLE</span>
+                <strong id="vehicleName">No vehicle selected</strong>
+                <p id="vehicleNumber">Vehicle information</p>
+            </div>
+            <button class="small-action" id="vehicleBtn">
+                <i class="fas fa-pen"></i>
+            </button>
+        </div>
+
+        <div class="status-card">
+            <div class="status-icon response">
+                <i class="fas fa-headset"></i>
+            </div>
+            <div>
+                <span>ASSISTANCE STATUS</span>
+                <strong id="assistanceStatus">Ready</strong>
+                <p id="assistanceSubtext">No active request</p>
+            </div>
+            <button class="small-action" id="cancelBtn" disabled>
+                <i class="fas fa-xmark"></i>
+            </button>
+        </div>
+
+    </section>
+
+    <section class="content-grid">
+
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">ROADSIDE SERVICES</span>
+                    <h2>What do you need?</h2>
+                </div>
+                <i class="fas fa-toolbox"></i>
+            </div>
+
+            <div class="service-grid">
+
+                <button class="service-card" data-service="Flat Tyre">
+                    <div class="service-icon"><i class="fas fa-circle-dot"></i></div>
+                    <strong>Flat Tyre</strong>
+                    <span>Tyre change or repair</span>
+                </button>
+
+                <button class="service-card" data-service="Dead Battery">
+                    <div class="service-icon"><i class="fas fa-car-battery"></i></div>
+                    <strong>Dead Battery</strong>
+                    <span>Jump start assistance</span>
+                </button>
+
+                <button class="service-card" data-service="Engine Problem">
+                    <div class="service-icon"><i class="fas fa-gears"></i></div>
+                    <strong>Engine Problem</strong>
+                    <span>Mechanical assistance</span>
+                </button>
+
+                <button class="service-card" data-service="Fuel Assistance">
+                    <div class="service-icon"><i class="fas fa-gas-pump"></i></div>
+                    <strong>Fuel Assistance</strong>
+                    <span>Ran out of fuel</span>
+                </button>
+
+                <button class="service-card" data-service="Vehicle Towing">
+                    <div class="service-icon"><i class="fas fa-truck-pickup"></i></div>
+                    <strong>Vehicle Towing</strong>
+                    <span>Need a tow truck</span>
+                </button>
+
+                <button class="service-card" data-service="Other Emergency">
+                    <div class="service-icon"><i class="fas fa-ellipsis"></i></div>
+                    <strong>Other</strong>
+                    <span>Something else</span>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="panel contacts-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">SAFETY</span>
+                    <h2>Emergency Contacts</h2>
+                </div>
+                <button class="add-contact" id="addContactBtn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+
+            <p class="panel-description">
+                Your selected contacts can be quickly notified when you request assistance.
+            </p>
+
+            <div id="contactsList"></div>
+        </div>
+
+    </section>
+
+    <section class="bottom-grid">
+
+        <div class="panel location-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">LOCATION SHARING</span>
+                    <h2>Share My Location</h2>
+                </div>
+                <i class="fas fa-location-crosshairs"></i>
+            </div>
+
+            <div class="location-preview">
+                <div id="map"></div>
+                <div class="location-details">
+                    <div>
+                        <span>LOCATION STATUS</span>
+                        <strong id="shareStatus">Not shared</strong>
+                    </div>
+                    <button class="share-btn" id="shareLocationBtn">
+                        <i class="fas fa-share-nodes"></i> Share Location
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel history-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">ACTIVITY</span>
+                    <h2>Recent SOS Requests</h2>
+                </div>
+                <i class="fas fa-clock-rotate-left"></i>
+            </div>
+
+            <div id="historyList"></div>
+        </div>
+
+    </section>
+
+    <div class="safety-note">
+        <i class="fas fa-circle-info"></i>
+        <div>
+            <strong>Important</strong>
+            <p>
+                AutoNexus roadside assistance is a vehicle-support feature.
+                For immediate danger, injury, fire, or other life-threatening situations,
+                use your local emergency services directly.
+            </p>
+        </div>
+    </div>
+
+</main>
+
+<!-- SOS CONFIRMATION MODAL -->
+<div class="modal" id="sosModal">
+    <div class="modal-content sos-modal">
+        <button class="close" id="closeSos">&times;</button>
+
+        <div class="modal-warning">
+            <i class="fas fa-triangle-exclamation"></i>
+        </div>
+
+        <span class="section-label">EMERGENCY REQUEST</span>
+        <h2>Request roadside assistance?</h2>
+        <p>
+            Your selected vehicle, current location (if available), and chosen
+            assistance type will be used to create this request.
+        </p>
+
+        <label>Assistance Type
+            <select id="sosType">
+                <option>General Roadside Assistance</option>
+                <option>Flat Tyre</option>
+                <option>Dead Battery</option>
+                <option>Engine Problem</option>
+                <option>Fuel Assistance</option>
+                <option>Vehicle Towing</option>
+                <option>Other Emergency</option>
+            </select>
+        </label>
+
+        <label>Additional Details
+            <textarea id="sosDetails"
+                      placeholder="Tell the mechanic what happened..."></textarea>
+        </label>
+
+        <div class="confirm-actions">
+            <button class="secondary-btn" id="cancelSos">Cancel</button>
+            <button class="confirm-sos" id="confirmSos">
+                <i class="fas fa-location-crosshairs"></i>
+                Confirm SOS
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal" id="contactModal">
+    <div class="modal-content">
+        <button class="close" id="closeContact">&times;</button>
+
+        <span class="section-label">SAFETY CONTACT</span>
+        <h2>Add Emergency Contact</h2>
+        <p class="modal-subtitle">
+            Add someone you trust for quick access during a roadside emergency.
+        </p>
+
+        <form id="contactForm">
+            <label>Name
+                <input id="contactName" type="text"
+                       placeholder="Contact name" required>
+            </label>
+
+            <label>Phone Number
+                <input id="contactPhone" type="tel"
+                       placeholder="Phone number" required>
+            </label>
+
+            <label>Relationship
+                <input id="contactRelation" type="text"
+                       placeholder="e.g. Parent, Friend" required>
+            </label>
+
+            <button class="save-btn" type="submit">
+                <i class="fas fa-user-plus"></i> Save Contact
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+<script src="emergency-sos.js"></script>
+</body>
+</html>

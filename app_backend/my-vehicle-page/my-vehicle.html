@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | My Vehicles</title>
+    <link rel="stylesheet" href="my-vehicle.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li class="active" onclick="window.location.href='my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='../documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='../mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='../reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='../emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='../ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+    <main class="dashboard">
+        <header class="topbar">
+            <div class="welcome">
+                <span class="eyebrow">VEHICLE GARAGE</span>
+                <h1>My Vehicles</h1>
+                <p>Manage your vehicles, service details and important information in one place.</p>
+            </div>
+
+            <div class="top-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input id="globalSearch" type="text" placeholder="Search">
+                </div>
+                <div class="notification" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <!-- <span>3</span> -->
+                </div>
+                <div class="profile" onclick="window.location.href='../profile-page/profile.html'">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <section class="overview">
+            <div class="overview-card">
+                <div class="overview-icon"><i class="fas fa-car"></i></div>
+                <div><strong id="vehicleCount">2</strong><span>Total Vehicles</span></div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon"><i class="fas fa-gas-pump"></i></div>
+                <div><strong id="fuelCount">2</strong><span>Fuel Vehicles</span></div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon"><i class="fas fa-calendar-check"></i></div>
+                <div><strong id="renewalCount">1</strong><span>Upcoming Renewal</span></div>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon"><i class="fas fa-wrench"></i></div>
+                <div><strong id="garageHealthStat">--%</strong><span>Garage Health</span></div>
+            </div>
+        </section>
+
+        <section class="page-heading">
+            <div>
+                <span class="section-label">YOUR GARAGE</span>
+                <h2>All Vehicles</h2>
+            </div>
+            <button class="primary-btn" id="addVehicleBtn">
+                <i class="fas fa-plus"></i> Add Vehicle
+            </button>
+        </section>
+
+        <div class="vehicle-toolbar">
+            <div class="vehicle-search">
+                <i class="fas fa-search"></i>
+                <input id="vehicleSearch" type="text" placeholder="Search by model or registration number...">
+            </div>
+            <select id="fuelFilter">
+                <option value="all">All Fuel Types</option>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <option value="CNG">CNG</option>
+            </select>
+        </div>
+
+        <section id="vehicleContainer" class="vehicle-grid"></section>
+
+        <section class="bottom-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">UPCOMING</span>
+                        <h2>Vehicle Reminders</h2>
+                    </div>
+                    <i class="fas fa-calendar-days"></i>
+                </div>
+                <div id="vehicleReminders"></div>
+            </div>
+
+            <div class="panel health-panel">
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">VEHICLE STATUS</span>
+                        <h2>Active Vehicle Health</h2>
+                    </div>
+                    <i class="fas fa-heart-pulse"></i>
+                </div>
+                <div class="health-score">
+                    <div class="score-ring"><strong id="healthRingScore">--%</strong><span id="healthRingLabel">--</span></div>
+                    <div class="health-copy">
+                        <p id="healthActiveVehicleName">No active vehicle</p>
+                        <small id="healthCopyNote">Add a vehicle to see its health breakdown.</small>
+                    </div>
+                </div>
+                <div class="health-breakdown" id="healthBreakdown"></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="vehicleModal">
+        <div class="modal-content">
+            <button class="close" id="closeModal" aria-label="Close">&times;</button>
+            <span class="section-label">GARAGE</span>
+            <h2>Add New Vehicle</h2>
+            <p class="modal-subtitle">Add your vehicle details to your AutoNexus garage.</p>
+
+            <form id="vehicleForm">
+                <label>Vehicle Model
+                    <div class="input-wrap"><i class="fas fa-car"></i>
+                        <input id="vehicleName" type="text" placeholder="e.g. Hyundai Creta" required>
+                    </div>
+                </label>
+
+                <label>Registration Number
+                    <div class="input-wrap"><i class="fas fa-id-card"></i>
+                        <input id="vehicleNumber" type="text" placeholder="e.g. PB65 AB 1234" required>
+                    </div>
+                </label>
+
+                <div class="form-row">
+                    <label>Fuel Type
+                        <select id="fuelType">
+                            <option>Petrol</option>
+                            <option>Diesel</option>
+                            <option>Electric</option>
+                            <option>CNG</option>
+                        </select>
+                    </label>
+                    <label>Insurance Expiry
+                        <input id="insuranceDate" type="date" required>
+                    </label>
+                </div>
+
+                <label>Current Mileage
+                    <div class="input-wrap"><i class="fas fa-gauge-high"></i>
+                        <input id="mileage" type="number" min="0" placeholder="e.g. 24500" required>
+                    </div>
+                </label>
+
+                <p class="section-label" style="display:block;margin:6px 0 14px;">VEHICLE HEALTH DETAILS</p>
+
+                <div class="form-row">
+                    <label>Engine — Last Service Date
+                        <input id="lastServiceDate" type="date">
+                    </label>
+                    <label>Engine — Mileage at Last Service
+                        <input id="lastServiceMileage" type="number" min="0" placeholder="e.g. 20000">
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label>Tyres — Last Changed
+                        <input id="tyresChangedDate" type="date">
+                    </label>
+                    <label>Brakes — Last Changed
+                        <input id="brakesChangedDate" type="date">
+                    </label>
+                </div>
+
+                <label>Battery — Last Changed
+                    <div class="input-wrap"><i class="fas fa-car-battery"></i>
+                        <input id="batteryChangedDate" type="date">
+                    </div>
+                </label>
+
+                <button class="save-btn" type="submit">Save Vehicle</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+<script src="my-vehicle.js"></script>
+</body>
+</html>

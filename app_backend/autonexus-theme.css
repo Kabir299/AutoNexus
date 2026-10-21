@@ -1,0 +1,141 @@
+/* AutoNexus shared theme layer.
+   Loaded on every page AFTER that page's own stylesheet.
+   Dark is the default look (unchanged). Adding "light" to <html> — done by
+   the inline script in <head>, before first paint — switches the app to
+   the light palette below. The same class/key is used everywhere so the
+   toggle on the Dashboard is reflected on every other page, including
+   after a refresh.
+*/
+
+/* ------------------------------------------------------------------ *
+ * 1) Invisible scrollbars, everywhere, in both themes.
+ *    Scrolling still works — only the visible track/thumb is hidden.
+ * ------------------------------------------------------------------ */
+*{
+    scrollbar-width:none;        /* Firefox */
+    -ms-overflow-style:none;     /* old Edge/IE */
+}
+*::-webkit-scrollbar{            /* Chrome, Safari, new Edge */
+    width:0;
+    height:0;
+    display:none;
+}
+html,body{
+    overflow-x:hidden;
+}
+
+/* Profile and notification controls are clickable on every page. */
+.profile,
+.notification,
+.profile-mini{
+    cursor:pointer;
+}
+
+/* ------------------------------------------------------------------ *
+ * 2) Light theme — redefines every CSS variable name used across the
+ *    app's stylesheets (names differ slightly page to page), then
+ *    repaints the hardcoded dark surfaces that don't read from a
+ *    variable so every page reskins consistently.
+ * ------------------------------------------------------------------ */
+html.light{
+    color-scheme:light;
+
+    /* dashboard.css naming */
+    --gold:#8B6B2E;
+    --gold-dark:#6b5322;
+    --bg:#f2ede3;
+    --card:#ffffff;
+    --card2:#faf7f0;
+    --line:rgba(139,107,46,.25);
+    --text:#1c1a16;
+    --muted:#736a5c;
+
+    /* naming shared by my-vehicle / mechanics-map / ai-assistant /
+       documents / profile / reminders / emergency-sos */
+    --primary:#8B6B2E;
+    --primary-dark:#6b5322;
+    --card-2:#faf7f0;
+    --border:rgba(139,107,46,.25);
+
+    /* style.css (landing page) naming */
+    --dark:#f2ede3;
+    --light:#1c1a16;
+    --gray:#736a5c;
+    --secondary:#e8ded0;
+}
+
+html.light body{
+    background:var(--bg) !important;
+    color:var(--text) !important;
+}
+
+/* Structural surfaces: cards, panels, boxes, modals, notices, tables,
+   search pills, list rows — repainted regardless of whether the
+   original rule used a variable or a hardcoded dark hex.
+   [class$="..."] (ends-with) is used instead of a plain substring match
+   so this only catches real container classes like "vehicle-card" or
+   "health-panel" — not unrelated classes that merely contain the same
+   word, e.g. icon classes like "fa-id-card" or text classes like
+   "panel-header"/"panel-title". */
+html.light [class$="card"]:not(i),
+html.light [class$="panel"]:not(i),
+html.light [class$="-box"]:not(i),
+html.light [class*="modal-content"],
+html.light [class$="notice"],
+html.light [class$="reminder"],
+html.light table,
+html.light .topbar .search-box,
+html.light .vehicle-search,
+html.light .document-search,
+html.light .reminder-search,
+html.light .history-search,
+html.light .icon-btn,
+html.light .notification,
+html.light .side-link,
+html.light .message.bot .bubble,
+html.light .toolbar,
+html.light .booking-controls,
+html.light .empty-state{
+    background:var(--card) !important;
+    border-color:var(--border,var(--line)) !important;
+    color:var(--text) !important;
+}
+
+html.light input,
+html.light select,
+html.light textarea{
+    background:#ffffff !important;
+    color:var(--text) !important;
+    border-color:var(--border,var(--line)) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder{
+    color:var(--muted) !important;
+}
+
+html.light th{
+    color:var(--muted) !important;
+}
+html.light td{
+    color:var(--text) !important;
+}
+html.light th,
+html.light td{
+    border-color:var(--border,var(--line)) !important;
+}
+
+/* The sidebar keeps its dark navy in both themes — it's the app's
+   brand chrome, not a themeable content surface. Text stays white;
+   the active/hover nav pill already sets its own dark text (#111)
+   against its gold background and must not be touched here. */
+html.light .sidebar,
+html.light .sidebar *{
+    color:#fff;
+}
+html.light .sidebar li:hover,
+html.light .sidebar li.active,
+html.light .sidebar li:hover *,
+html.light .sidebar li.active *{
+    color:#111;
+}

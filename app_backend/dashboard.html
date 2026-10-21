@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+// Apply the saved theme before first paint so there's no flash of the
+// wrong theme, and so the Dashboard's toggle is reflected on every page.
+(function(){
+    try{
+        if(localStorage.getItem("autonexus_theme")==="light"){
+            document.documentElement.classList.add("light");
+        }
+    }catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AutoNexus | Smart Vehicle Dashboard</title>
+
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin="">
+
+<link rel="stylesheet" href="dashboard.css">
+<link rel="stylesheet" href="autonexus-theme.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li class="active" onclick="window.location.href='dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+<header class="topbar">
+    <div>
+        <span class="eyebrow">AUTONEXUS CONTROL CENTER</span>
+        <h1>Welcome, <span id="userName">Driver</span> 👋</h1>
+        <p>Your complete vehicle, maintenance and roadside command center.</p>
+    </div>
+
+    <div class="top-actions">
+        <div class="live-pill"><span></span> LIVE SYNC</div>
+
+        <button class="icon-btn" id="notificationBtn">
+            <i class="fas fa-bell"></i>
+            <b id="notificationCount">0</b>
+        </button>
+
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
+
+        <button class="profile-btn" onclick="go('profile-page/profile.html')">
+            <i class="fas fa-user-circle"></i>
+        </button>
+    </div>
+</header>
+
+<section class="stats-grid">
+    <div class="stat">
+        <div class="stat-icon gold"><i class="fas fa-car"></i></div>
+        <div><small>VEHICLES</small><strong id="vehicleCount">0</strong><span>Registered</span></div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon blue"><i class="fas fa-folder"></i></div>
+        <div><small>DOCUMENTS</small><strong id="documentCount">0</strong><span>Tracked</span></div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+        <div><small>BOOKINGS</small><strong id="bookingCount">0</strong><span id="bookingSub">Service history</span></div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon green"><i class="fas fa-bell"></i></div>
+        <div><small>REMINDERS</small><strong id="reminderCount">0</strong><span>Need attention</span></div>
+    </div>
+    <div class="stat">
+        <div class="stat-icon red"><i class="fas fa-triangle-exclamation"></i></div>
+        <div><small>SOS</small><strong id="sosCount">0</strong><span>Emergency events</span></div>
+    </div>
+</section>
+
+<section class="hero-grid">
+
+    <div class="hero-vehicle panel">
+        <div class="hero-copy">
+            <span class="section-label">ACTIVE VEHICLE</span>
+            <div class="hero-title-row">
+                <h2 id="heroName">No Vehicle Added</h2>
+                <select id="activeVehicleSelect" class="vehicle-switcher" style="display:none;"></select>
+            </div>
+            <p>Registration Number</p>
+            <h3 id="heroNumber">------</h3>
+
+            <div class="hero-tags">
+                <span id="heroFuel">Fuel: --</span>
+                <span id="heroInsurance">Insurance: --</span>
+                <span id="heroHealth">Health: --</span>
+            </div>
+
+            <div class="hero-actions">
+                <button class="primary-btn" onclick="go('my-vehicle-page/my-vehicle.html')">
+                    Manage Vehicle <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="secondary-btn" onclick="openVehicleModal()">
+                    <i class="fas fa-plus"></i> Add Vehicle
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-car">
+            <i class="fas fa-car-side"></i>
+            <span>ACTIVE</span>
+        </div>
+    </div>
+
+    <div class="health-card panel">
+        <div class="panel-title">
+            <div>
+                <span class="section-label">VEHICLE HEALTH</span>
+                <h2 id="healthScore">--%</h2>
+            </div>
+            <i class="fas fa-heart-pulse"></i>
+        </div>
+
+        <div class="health-item">
+            <span>Engine</span><strong id="engineHealthText">--%</strong>
+            <div><span id="engineHealthBar"></span></div>
+        </div>
+
+        <div class="health-item">
+            <span>Battery</span><strong id="batteryHealthText">--%</strong>
+            <div><span id="batteryHealthBar"></span></div>
+        </div>
+
+        <div class="health-item">
+            <span>Tyres</span><strong id="tyreHealthText">--%</strong>
+            <div><span id="tyreHealthBar"></span></div>
+        </div>
+
+        <div class="health-item">
+            <span>Brakes</span><strong id="brakeHealthText">--%</strong>
+            <div><span id="brakeHealthBar"></span></div>
+        </div>
+
+        <button class="text-link" onclick="go('my-vehicle-page/my-vehicle.html')">
+            View vehicle details <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+
+</section>
+
+<section class="main-grid">
+
+    <div class="panel map-panel">
+        <div class="panel-title">
+            <div>
+                <span class="section-label">LIVE LOCATION</span>
+                <h2>Nearby Mechanics</h2>
+                <p id="mapSubtitle">Loading nearby service locations...</p>
+            </div>
+            <button class="secondary-btn small" onclick="go('mechanics-map-page/mechanics-map.html')">
+                Full Map <i class="fas fa-arrow-up-right-from-square"></i>
+            </button>
+        </div>
+
+        <div class="map-wrap">
+            <div id="dashboardMap"></div>
+            <div class="map-live"><span></span><strong id="mapStatus">LIVE MAP</strong></div>
+            <button class="map-locate" id="locateBtn"><i class="fas fa-crosshairs"></i></button>
+        </div>
+
+        <div class="map-footer">
+            <span><i class="fas fa-circle user-dot"></i> You</span>
+            <span><i class="fas fa-location-dot mechanic-dot"></i> Mechanic</span>
+            <strong id="nearbyCount">0 nearby</strong>
+        </div>
+    </div>
+
+    <div class="panel reminders-panel">
+        <div class="panel-title">
+            <div>
+                <span class="section-label">ATTENTION</span>
+                <h2>Upcoming Reminders</h2>
+            </div>
+            <button class="text-link" onclick="go('reminders-page/reminders.html')">View all</button>
+        </div>
+        <div id="remindersList"></div>
+    </div>
+
+</section>
+
+<section class="content-grid">
+
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <span class="section-label">SERVICE</span>
+                <h2>Recent Mechanic Bookings</h2>
+            </div>
+            <button class="text-link" onclick="go('profile-page/profile.html')">History</button>
+        </div>
+
+        <div class="table-scroll">
+            <table>
+                <thead>
+                    <tr><th>Mechanic</th><th>Vehicle</th><th>Date</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody id="bookingTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="panel-title">
+            <div>
+                <span class="section-label">DOCUMENTS</span>
+                <h2>Document Status</h2>
+            </div>
+            <button class="text-link" onclick="go('documents-page/documents.html')">Manage</button>
+        </div>
+        <div id="documentsList"></div>
+    </div>
+
+</section>
+
+<section class="quick-grid">
+
+    <button class="quick-card" onclick="go('mechanics-map-page/mechanics-map.html')">
+        <i class="fas fa-location-dot"></i>
+        <strong>Find Mechanic</strong>
+        <span>Locate nearby help</span>
+    </button>
+
+    <button class="quick-card" onclick="go('documents-page/documents.html')">
+        <i class="fas fa-cloud-arrow-up"></i>
+        <strong>Documents</strong>
+        <span>Manage vehicle papers</span>
+    </button>
+
+    <button class="quick-card" onclick="go('ai-assistant-page/ai-assistant.html')">
+        <i class="fas fa-robot"></i>
+        <strong>Ask AI</strong>
+        <span>Diagnose a problem</span>
+    </button>
+
+    <button class="quick-card" onclick="go('reminders-page/reminders.html')">
+        <i class="fas fa-calendar-plus"></i>
+        <strong>Add Reminder</strong>
+        <span>Stay ahead of service</span>
+    </button>
+
+    <button class="quick-card sos" onclick="triggerSOS()">
+        <i class="fas fa-triangle-exclamation"></i>
+        <strong>Emergency SOS</strong>
+        <span>Get roadside assistance</span>
+    </button>
+
+</section>
+
+<section class="ai-sos-grid">
+
+    <div class="ai-banner">
+        <div class="ai-icon"><i class="fas fa-robot"></i></div>
+        <div>
+            <span class="section-label">AUTONEXUS AI</span>
+            <h2>Vehicle problem?</h2>
+            <p>Get troubleshooting guidance, maintenance suggestions and repair-cost advice.</p>
+        </div>
+        <button onclick="go('ai-assistant-page/ai-assistant.html')">Open AI <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <div class="sos-banner">
+        <div class="sos-icon"><i class="fas fa-triangle-exclamation"></i></div>
+        <div>
+            <span class="section-label">24/7 EMERGENCY</span>
+            <h2>Need roadside assistance?</h2>
+            <p>Share your location and request help from the Emergency SOS page.</p>
+        </div>
+        <button onclick="go('emergency-sos-fixed-map/emergency-sos.html')">Open SOS <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+</section>
+
+<footer>
+    <span>© 2026 AutoNexus • Smart Vehicle Assistance Platform</span>
+    <span>Live sync <strong id="footerTime">--:--</strong></span>
+</footer>
+
+</main>
+
+<!-- VEHICLE MODAL -->
+<div class="modal" id="vehicleModal">
+    <div class="modal-content">
+        <button class="modal-close" type="button" onclick="closeVehicleModal()">&times;</button>
+        <span class="section-label">GARAGE</span>
+        <h2>Add New Vehicle</h2>
+        <p>Add your vehicle details to your AutoNexus garage.</p>
+        <form id="vehicleForm">
+            <label>Vehicle Model<input id="vehicleName" type="text" placeholder="e.g. Hyundai Creta" required></label>
+            <label>Registration Number<input id="vehicleNumber" type="text" placeholder="e.g. PB65 AB 1234" required></label>
+            <div class="form-row"><label>Fuel Type<select id="fuelType"><option>Petrol</option><option>Diesel</option><option>Electric</option><option>CNG</option></select></label><label>Insurance Expiry<input id="insuranceDate" type="date" required></label></div>
+            <label>Current Mileage (km)<input id="vehicleMileage" type="number" min="0" placeholder="e.g. 24500" required></label>
+            <p class="section-label" style="display:block;margin:14px 0 8px;">VEHICLE HEALTH DETAILS</p>
+            <div class="form-row"><label>Engine — Last Service Date<input id="lastServiceDate" type="date"></label><label>Engine — Mileage at Last Service<input id="lastServiceMileage" type="number" min="0" placeholder="e.g. 20000"></label></div>
+            <div class="form-row"><label>Tyres — Last Changed<input id="tyresChangedDate" type="date"></label><label>Brakes — Last Changed<input id="brakesChangedDate" type="date"></label></div>
+            <label>Battery — Last Changed<input id="batteryChangedDate" type="date"></label>
+            <button class="primary-btn" type="submit">Save Vehicle</button>
+        </form>
+    </div>
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="notification-drawer" id="notificationDrawer">
+    <div class="drawer-head">
+        <div>
+            <span class="section-label">LIVE</span>
+            <h2>Notifications</h2>
+        </div>
+        <button onclick="closeNotifications()">&times;</button>
+    </div>
+    <div id="notificationList"></div>
+</aside>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""></script>
+
+<script src="autonexus-sync.js"></script>
+<script src="autonexus-location.js"></script>
+<script src="autonexus-mechanics-data.js"></script>
+<script src="dashboard.js"></script>
+
+</body>
+</html>

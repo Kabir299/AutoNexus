@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Sign In</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="autonexus-theme.css">
+    <link rel="stylesheet" href="login-premium.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="login-page">
+    <main class="auth-shell">
+        <section class="login-visual" aria-label="AutoNexus introduction">
+            <div class="auth-brand">
+                <span class="auth-brand-mark"><i class="fa-solid fa-caret-up"></i></span>
+                AUTONEXUS
+            </div>
+            <div class="login-copy">
+                <span class="login-eyebrow">Welcome back</span>
+                <h1>Your vehicle, under control.</h1>
+                <p>Return to a more considered way of managing vehicle health, maintenance, documents and roadside assistance.</p>
+                <div class="login-points">
+                    <span class="login-point">Vehicle Health</span>
+                    <span class="login-point">Smart Maintenance</span>
+                    <span class="login-point">Secure Records</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="login-form-panel">
+            <form id="loginForm">
+                <div class="login-form-header">
+                    <span class="mini-label">Member access</span>
+                    <h2>Sign in to AutoNexus</h2>
+                    <p class="login-subtitle">Continue where you left off and keep every part of your vehicle experience in one place.</p>
+                </div>
+
+                <div class="login-field">
+                    <label for="loginEmail">Email address</label>
+                    <div class="input-box">
+                        <i class="fa fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                </div>
+
+                <div class="login-field">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-box password-box">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required>
+                        <i class="fa fa-eye togglePassword" data-target="loginPassword" aria-label="Show password"></i>
+                    </div>
+                </div>
+
+                <div class="login-options">
+                    <label><input type="checkbox" id="remember"> Remember me</label>
+                    <a href="#" onclick="return false;">Forgot password?</a>
+                </div>
+
+                <button type="submit">Sign in <i class="fa-solid fa-arrow-right"></i></button>
+
+                <p class="login-footer">New to AutoNexus? <a href="signup.html">Create your account</a></p>
+            </form>
+        </section>
+    </main>
+    <script src="auth.js"></script>
+</body>
+</html>

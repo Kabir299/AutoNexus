@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Documents</title>
+    <link rel="stylesheet" href="documents.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='../my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li class="active" onclick="window.location.href='documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li onclick="window.location.href='../mechanics-map-page/mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='../reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='../emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='../ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+    <header class="topbar">
+        <div class="welcome">
+            <span class="eyebrow">VEHICLE LOCKER</span>
+            <h1>Documents</h1>
+            <p>Keep your vehicle documents safe, organised and easy to access.</p>
+        </div>
+
+        <div class="top-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input id="globalSearch" type="text" placeholder="Search">
+            </div>
+            <div class="notification" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <!-- <span>0</span> -->
+            </div>
+            <div class="profile" onclick="window.location.href='../profile-page/profile.html'">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="overview">
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-folder-open"></i></div>
+            <div><strong id="documentCount">8</strong><span>Total Documents</span></div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-shield-halved"></i></div>
+            <div><strong id="validCount">6</strong><span>Valid Documents</span></div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-calendar-xmark"></i></div>
+            <div><strong id="expiryCount">2</strong><span>Expiring Soon</span></div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+            <div><strong id="storageCount">0 MB</strong><span>Locker Storage</span></div>
+        </div>
+    </section>
+
+    <section class="page-heading">
+        <div>
+            <span class="section-label">DOCUMENT LOCKER</span>
+            <h2>My Documents</h2>
+        </div>
+        <button class="primary-btn" id="uploadBtn">
+            <i class="fas fa-plus"></i> Upload Document
+        </button>
+    </section>
+
+    <div class="toolbar">
+        <div class="document-search">
+            <i class="fas fa-search"></i>
+            <input id="documentSearch" type="text"
+                   placeholder="Search documents, vehicle or registration...">
+        </div>
+
+        <select id="categoryFilter">
+            <option value="all">All Categories</option>
+            <option value="Insurance">Insurance</option>
+            <option value="RC">Registration (RC)</option>
+            <option value="PUC">PUC</option>
+            <option value="License">Driving License</option>
+            <option value="Service">Service Record</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <select id="vehicleFilter"><option value="all">All Vehicles</option></select>
+    </div>
+
+    <section id="documentContainer" class="document-grid"></section>
+
+    <section class="bottom-grid">
+        <div class="panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">EXPIRY TRACKER</span>
+                    <h2>Upcoming Expiries</h2>
+                </div>
+                <i class="fas fa-calendar-days"></i>
+            </div>
+            <div id="expiryList"></div>
+        </div>
+
+        <div class="panel locker-panel">
+            <div class="panel-header">
+                <div>
+                    <span class="section-label">SECURE LOCKER</span>
+                    <h2>Document Safety</h2>
+                </div>
+                <i class="fas fa-lock"></i>
+            </div>
+
+            <div class="security-item">
+                <div class="security-icon"><i class="fas fa-shield-check"></i></div>
+                <div>
+                    <strong>Organised & Protected</strong>
+                    <p>Your document files stay in this browser's local storage.</p>
+                </div>
+            </div>
+
+            <div class="storage-bar">
+                <div id="storageBar"></div>
+            </div>
+            <div class="storage-info">
+                <span id="storageText">0 MB used</span>
+                <span>100 MB</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- UPLOAD MODAL -->
+<div class="modal" id="uploadModal">
+    <div class="modal-content">
+        <button class="close" id="closeModal">&times;</button>
+
+        <span class="section-label">DOCUMENT LOCKER</span>
+        <h2 id="documentModalTitle">Upload Document</h2>
+        <p class="modal-subtitle">
+            Add an important vehicle document to your secure locker.
+        </p>
+
+        <form id="documentForm">
+
+            <label>Document Name
+                <div class="input-wrap">
+                    <i class="fas fa-file"></i>
+                    <input id="documentName" type="text"
+                           placeholder="e.g. Creta Insurance Policy" required>
+                </div>
+            </label>
+
+            <div class="form-row">
+                <label>Category
+                    <select id="documentCategory" required>
+                        <option value="Insurance">Insurance</option>
+                        <option value="RC">Registration (RC)</option>
+                        <option value="PUC">PUC</option>
+                        <option value="License">Driving License</option>
+                        <option value="Service">Service Record</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </label>
+
+                <label>Vehicle
+                    <select id="documentVehicle" required>
+                        <option value="">Select vehicle</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-row">
+                <label>Issue Date
+                    <input id="issueDate" type="date">
+                </label>
+
+                <label>Expiry Date
+                    <input id="expiryDate" type="date">
+                </label>
+            </div>
+
+            <label>Select File
+                <div class="file-drop" id="fileDrop">
+                    <i class="fas fa-cloud-arrow-up"></i>
+                    <strong id="fileName">Choose a file</strong>
+                    <span>PDF, JPG, JPEG or PNG • Max 10 MB</span>
+                    <input id="documentFile" type="file"
+                           accept=".pdf,.jpg,.jpeg,.png">
+                </div>
+            </label>
+
+            <button class="save-btn" type="submit">
+                <i class="fas fa-upload"></i> Save Document
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- PREVIEW MODAL -->
+<div class="modal" id="previewModal">
+    <div class="preview-content">
+        <button class="close" id="closePreview">&times;</button>
+        <div id="previewArea"></div>
+    </div>
+</div>
+
+<script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+<script src="documents.js"></script>
+</body>
+</html>

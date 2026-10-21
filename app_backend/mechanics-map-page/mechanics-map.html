@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    (function(){
+        try{
+            if(localStorage.getItem("autonexus_theme")==="light"){
+                document.documentElement.classList.add("light");
+            }
+        }catch(e){}
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoNexus | Find Mechanics</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          crossorigin=""/>
+
+    <link rel="stylesheet" href="mechanics-map.css">
+    <link rel="stylesheet" href="../autonexus-theme.css">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <i class="fa-solid fa-car-side"></i>
+        <h2>AutoNexus</h2>
+    </div>
+
+    <ul>
+        <li onclick="window.location.href='../dashboard.html'"><i class="fas fa-house"></i><span>Dashboard</span></li>
+        <li onclick="window.location.href='../my-vehicle-page/my-vehicle.html'"><i class="fas fa-car"></i><span>My Vehicles</span></li>
+        <li onclick="window.location.href='../documents-page/documents.html'"><i class="fas fa-folder-open"></i><span>Documents</span></li>
+        <li class="active" onclick="window.location.href='mechanics-map.html'"><i class="fas fa-screwdriver-wrench"></i><span>Mechanics</span></li>
+        <li onclick="window.location.href='../reminders-page/reminders.html'"><i class="fas fa-bell"></i><span>Reminders</span></li>
+        <li onclick="window.location.href='../emergency-sos-fixed-map/emergency-sos.html'"><i class="fas fa-triangle-exclamation"></i><span>Emergency SOS</span></li>
+        <li onclick="window.location.href='../ai-assistant-page/ai-assistant.html'"><i class="fas fa-robot"></i><span>AI Assistant</span></li>
+        <li onclick="window.location.href='../profile-page/profile.html'"><i class="fas fa-user"></i><span>My Profile</span></li>
+        <li onclick="logout()"><i class="fas fa-right-from-bracket"></i><span>Logout</span></li>
+    </ul>
+</aside>
+
+<main class="dashboard">
+
+    <header class="topbar">
+        <div class="welcome">
+            <span class="eyebrow">ROADSIDE NETWORK</span>
+            <h1>Find Mechanics</h1>
+            <p>Find nearby mechanics on the map and book the service you need.</p>
+        </div>
+
+        <div class="top-right">
+            <div class="notification" id="notificationBtn">
+                <i class="fas fa-bell"></i>
+                <span id="notificationCount">0</span>
+            </div>
+
+            <div class="profile"
+                 onclick="window.location.href='../profile-page/profile.html'">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <section class="search-panel">
+
+        <div class="search-box">
+            <i class="fas fa-location-dot"></i>
+
+            <input id="locationInput"
+                   type="text"
+                   placeholder="Enter a city or location, e.g. Chandigarh">
+
+            <button id="searchLocationBtn">
+                <i class="fas fa-magnifying-glass"></i>
+                Search
+            </button>
+        </div>
+
+        <button class="locate-btn" id="useLocationBtn">
+            <i class="fas fa-crosshairs"></i>
+            Use My Location
+        </button>
+
+        <select id="serviceFilter">
+            <option value="all">All Services</option>
+            <option value="car_repair">Car Repair</option>
+            <option value="tyres">Tyres</option>
+            <option value="battery">Battery</option>
+            <option value="oil">Oil / Service</option>
+            <option value="car_wash">Car Wash</option>
+        </select>
+
+    </section>
+
+    <!-- MAIN MAP AREA -->
+    <section class="map-layout">
+
+        <div class="map-card">
+
+            <div id="map"></div>
+
+            <div class="map-overlay top-left">
+                <div class="map-status">
+                    <span class="status-dot"></span>
+                    <span id="mapStatus">Loading mechanics...</span>
+                </div>
+            </div>
+
+            <div class="map-overlay top-right-map">
+                <button id="recenterBtn" title="Recenter map">
+                    <i class="fas fa-location-crosshairs"></i>
+                </button>
+
+                <button id="zoomInBtn" title="Zoom in">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+                <button id="zoomOutBtn" title="Zoom out">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+
+            <div class="map-legend">
+                <div>
+                    <span class="legend-dot you"></span>
+                    You
+                </div>
+
+                <div>
+                    <span class="legend-dot mechanic"></span>
+                    Mechanic
+                </div>
+
+                <div>
+                    <span class="legend-dot favorite"></span>
+                    Favourite
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MECHANIC LIST -->
+        <aside class="mechanic-list-panel">
+
+            <div class="list-header">
+                <div>
+                    <span class="section-label">NEARBY</span>
+                    <h2>Mechanics</h2>
+                    <p id="resultsText">Finding nearby mechanics...</p>
+                </div>
+
+                <select id="sortFilter">
+                    <option value="distance">Nearest</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+
+            <div id="mechanicList" class="mechanic-list"></div>
+
+        </aside>
+
+    </section>
+
+    <!-- SELECTED MECHANIC DETAILS -->
+    <section class="selected-mechanic panel" id="selectedMechanic">
+
+        <div class="selected-placeholder">
+            <div class="placeholder-icon">
+                <i class="fas fa-map-location-dot"></i>
+            </div>
+
+            <div>
+                <span class="section-label">MECHANIC DETAILS</span>
+                <h2>Select a mechanic</h2>
+                <p>Click a marker or mechanic card to see details and booking options.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="api-note">
+        <i class="fas fa-circle-info"></i>
+        <span>
+            This page uses <strong>Leaflet</strong> for the interactive map and
+            OpenStreetMap map tiles. Nearby mechanic listings are generated
+            around your location. Internet access is required for the map
+            tiles and city search.
+        </span>
+    </div>
+
+</main>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookingModal">
+
+    <div class="modal-content">
+
+        <button class="close" id="closeBooking">&times;</button>
+
+        <span class="section-label">BOOK MECHANIC</span>
+        <h2 id="bookingTitle">Book Service</h2>
+
+        <p class="modal-subtitle" id="bookingSubtitle"></p>
+
+        <form id="bookingForm">
+
+            <label>
+                Select Vehicle
+                <select id="bookingVehicle">
+                    <option value="">No vehicles added yet</option>
+                </select>
+            </label>
+
+            <label>
+                Service
+                <select id="bookingService">
+                    <option>General Service</option>
+                    <option>Engine Repair</option>
+                    <option>AC Repair</option>
+                    <option>Battery</option>
+                    <option>Tyre & Wheel</option>
+                    <option>Oil Change</option>
+                    <option>Car Wash</option>
+                </select>
+            </label>
+
+            <div class="form-row">
+                <label>
+                    Date
+                    <input id="bookingDate" type="date" required>
+                </label>
+
+                <label>
+                    Time
+                    <input id="bookingTime" type="time" required>
+                </label>
+            </div>
+
+            <label>
+                Problem / Notes
+                <textarea id="bookingNotes"
+                          placeholder="Describe the issue or service you need..."></textarea>
+            </label>
+
+            <button class="book-submit" type="submit">
+                <i class="fas fa-calendar-check"></i>
+                Confirm Booking
+            </button>
+
+        </form>
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        crossorigin=""></script>
+
+<script src="../autonexus-sync.js"></script>
+<script src="../autonexus-location.js"></script>
+<script src="../autonexus-mechanics-data.js"></script>
+<script src="mechanics-map.js"></script>
+</body>
+</html>

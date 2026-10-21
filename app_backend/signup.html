@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b0f">
+    <title>AutoNexus | Create Account</title>
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="autonexus-theme.css">
+    <link rel="stylesheet" href="signup-premium.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="signup-page">
+    <main class="signup-shell">
+        <section class="signup-visual" aria-label="AutoNexus introduction">
+            <div class="signup-brand">
+                <span class="signup-brand-mark"><i class="fa-solid fa-caret-up"></i></span>
+                <span>AUTONEXUS</span>
+            </div>
+
+            <div class="visual-topline">
+                <span class="status-dot"></span>
+                <span>Private vehicle intelligence</span>
+            </div>
+
+            <div class="signup-visual-copy">
+                <span class="signup-eyebrow">A smarter ownership experience</span>
+                <h1>Everything your vehicle needs.<br><em>One place.</em></h1>
+                <p>Join AutoNexus to bring vehicle health, maintenance, documents and assistance into one refined command centre.</p>
+
+                <div class="visual-stat-row">
+                    <div><strong>01</strong><span>Vehicle health</span></div>
+                    <div><strong>02</strong><span>Maintenance</span></div>
+                    <div><strong>03</strong><span>Assistance</span></div>
+                </div>
+            </div>
+
+            <div class="visual-footer">
+                <span>AUTONEXUS / YOUR VEHICLE, BETTER MANAGED</span>
+                <span class="visual-line"></span>
+            </div>
+        </section>
+
+        <section class="signup-form-panel">
+            <div class="form-panel-inner">
+                <div class="signup-form-header">
+                    <span class="mini-label">New member</span>
+                    <h2>Create your account</h2>
+                    <p>Set up your AutoNexus profile. It takes less than two minutes.</p>
+                </div>
+
+                <div id="authMessage" class="signup-message" aria-live="polite"></div>
+
+                <form id="signupForm" novalidate>
+                    <div class="form-section-heading">
+                        <span>01</span>
+                        <div><strong>Personal details</strong><small>Tell us who you are</small></div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="signup-field field-full">
+                            <label for="name">Full name</label>
+                            <div class="premium-input">
+                                <i class="fa-regular fa-user"></i>
+                                <input type="text" id="name" placeholder="Your full name" autocomplete="name" required>
+                            </div>
+                        </div>
+
+                        <div class="signup-field">
+                            <label for="phone">Contact number</label>
+                            <div class="premium-input">
+                                <i class="fa-solid fa-phone"></i>
+                                <input type="tel" id="phone" placeholder="Your phone number" autocomplete="tel" required>
+                            </div>
+                        </div>
+
+                        <div class="signup-field">
+                            <label for="email">Email address</label>
+                            <div class="premium-input">
+                                <i class="fa-regular fa-envelope"></i>
+                                <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+                            </div>
+                        </div>
+
+                        <div class="signup-field field-full">
+                            <label for="location">Location</label>
+                            <div class="premium-input">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <input type="text" id="location" placeholder="City or current location" autocomplete="address-level2" required>
+                            </div>
+                        </div>
+
+                        <div class="signup-field">
+                            <label for="gender">Gender</label>
+                            <div class="premium-input select-input">
+                                <i class="fa-solid fa-venus-mars"></i>
+                                <select id="gender" required>
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down select-chevron"></i>
+                            </div>
+                        </div>
+
+                        <div class="signup-field">
+                            <label for="dob">Date of birth</label>
+                            <div class="premium-input">
+                                <i class="fa-regular fa-calendar"></i>
+                                <input type="date" id="dob" autocomplete="bday" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section-heading password-heading">
+                        <span>02</span>
+                        <div><strong>Secure your account</strong><small>Choose a private password</small></div>
+                    </div>
+
+                    <div class="signup-grid">
+                        <div class="signup-field">
+                            <label for="password">Password</label>
+                            <div class="premium-input password-input">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="password" placeholder="Create a password" autocomplete="new-password" required>
+                                <button type="button" class="password-toggle togglePassword" data-target="password" aria-label="Show password"><i class="fa-regular fa-eye"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="signup-field">
+                            <label for="confirmPassword">Confirm password</label>
+                            <div class="premium-input password-input">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="password" id="confirmPassword" placeholder="Repeat your password" autocomplete="new-password" required>
+                                <button type="button" class="password-toggle togglePassword" data-target="confirmPassword" aria-label="Show password"><i class="fa-regular fa-eye"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="password-note">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <div><strong>Simple, secure access</strong><span>Use at least 8 letters and numbers. No special characters are required.</span></div>
+                    </div>
+
+                    <button class="create-account-btn" type="submit">
+                        <span>Create AutoNexus account</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <p class="signup-footer">Already have an account? <a href="login.html">Sign in</a></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+</body>
+</html>
